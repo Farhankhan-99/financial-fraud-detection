@@ -202,7 +202,3 @@ Every prediction is explained using **SHAP (SHapley Additive exPlanations)**:
 ## ⚠️ Note on Dataset
 
 The 13 enriched columns (`transaction_hour`, `customer_age`, `account_age_days`, `device_type`, `channel`, `merchant_category`, etc.) are **synthetically generated** with fraud-correlated distributions using `numpy.random.seed(42)` for reproducibility. The base 11 columns are original PaySim data. Data files are not included in this repo due to size (3GB+).
-
----
-
-*Built as a portfolio project targeting Data Analyst / ML roles in fintech and banking.*
