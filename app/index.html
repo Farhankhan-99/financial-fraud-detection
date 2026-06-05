@@ -23,12 +23,16 @@
   --muted:   #64748b;
   --label:   #94a3b8;
 }
-html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
 
+/* ── BASE ── */
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; }
+
+/* ── TOPBAR ── */
 .topbar { height: 44px; background: var(--panel); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
 .logo { font-weight: 700; font-size: 1.05rem; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
 .logo span { color: var(--accent); }
 .topbar-tag { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--muted); border: 1px solid var(--border2); padding: 2px 10px; border-radius: 4px; letter-spacing: 0.05em; white-space: nowrap; }
+.topbar-tag.hide-mobile { display: inline-flex; }
 .api-live { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; font-family: 'Space Mono', monospace; font-size: 0.62rem; white-space: nowrap; }
 .api-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; animation: blink 2s infinite; }
 .dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
@@ -36,10 +40,12 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .dot-amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
+/* ── DESKTOP LAYOUT ── */
 .layout { display: flex; height: calc(100vh - 44px); margin-top: 44px; overflow: hidden; }
-
-/* LEFT */
 .left { width: 560px; flex-shrink: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1rem 1.2rem; overflow: hidden; }
+.right { flex: 1; display: flex; flex-direction: column; padding: 1rem 1.2rem; overflow: hidden; gap: 0.75rem; min-width: 0; }
+
+/* ── SHARED INPUT STYLES ── */
 .section-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
 .section-label::before { content: '|'; font-weight: 700; }
 .irow { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; background: var(--card); margin-bottom: 0.42rem; overflow: hidden; transition: border-color 0.15s; height: 40px; flex-shrink: 0; }
@@ -48,7 +54,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .irow-num { width: 34px; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--panel); border-right: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--muted); flex-shrink: 0; }
 .irow-lbl { flex: 1; padding: 0 0.8rem; font-size: 0.8rem; color: var(--label); font-weight: 500; white-space: nowrap; }
 .num-wrap { display: flex; align-items: center; border-left: 1px solid var(--border); height: 100%; }
-.num-wrap input[type="number"] { width: 110px; height: 100%; background: transparent; border: none; color: var(--text); font-family: 'Space Mono', monospace; font-size: 0.8rem; padding: 0 0.5rem; outline: none; -moz-appearance: textfield; }
+.num-wrap input[type="number"] { width: 100px; height: 100%; background: transparent; border: none; color: var(--text); font-family: 'Space Mono', monospace; font-size: 0.8rem; padding: 0 0.5rem; outline: none; -moz-appearance: textfield; }
 .num-wrap input[type="number"]::-webkit-outer-spin-button,
 .num-wrap input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .nbtn { width: 32px; height: 100%; background: var(--panel); border: none; border-left: 1px solid var(--border); color: var(--label); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.1s, background 0.1s; }
@@ -65,8 +71,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 input[type="range"] { -webkit-appearance: none; width: 100%; height: 3px; background: var(--border2); border-radius: 2px; outline: none; cursor: pointer; display: block; }
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 3px rgba(79,127,255,0.2); }
 
-/* RIGHT */
-.right { flex: 1; display: flex; flex-direction: column; padding: 1rem 1.2rem; overflow: hidden; gap: 0.75rem; min-width: 0; }
+/* ── RIGHT PANEL ── */
 .mbadge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.75rem; font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--label); align-self: flex-start; flex-shrink: 0; }
 .mbadge-dot { color: var(--accent); }
 .idle { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.12; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--muted); letter-spacing: 0.1em; text-align: center; line-height: 2; }
@@ -75,7 +80,7 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 #resultContent::-webkit-scrollbar { width: 3px; }
 #resultContent::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* PREDICTION CARD */
+/* ── PREDICTION CARD ── */
 .pred-single { border-radius: 8px; padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; border: 1px solid var(--border); flex-shrink: 0; transition: all 0.35s; }
 .pred-single.legit { border-color: var(--green); background: rgba(16,185,129,0.08); }
 .pred-single.fraud  { border-color: var(--red);   background: rgba(239,68,68,0.08); }
@@ -87,7 +92,7 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 .pred-single.fraud  .pred-title { color: var(--red); }
 .pred-sub { font-size: 0.65rem; color: var(--sub); margin-top: 0.1rem; }
 
-/* PROBABILITY ROW — 3 cells */
+/* ── PROBABILITY ROW ── */
 .prob-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--border); border-radius: 8px; background: var(--card); overflow: hidden; flex-shrink: 0; }
 .prob-hdr { grid-column: 1/-1; padding: 0.45rem 1rem; border-bottom: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--accent); letter-spacing: 0.12em; display: flex; align-items: center; gap: 0.35rem; }
 .prob-hdr::before { content:'|'; font-weight:700; }
@@ -99,10 +104,10 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 .prob-fill { height: 100%; border-radius: 2px; width: 0%; transition: width 0.7s cubic-bezier(0.4,0,0.2,1); }
 .conf-sub { font-size: 0.58rem; color: var(--muted); margin-top: 0.25rem; font-family: 'Space Mono', monospace; }
 
-/* BOTTOM SPLIT */
+/* ── BOTTOM SPLIT ── */
 .bottom-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; flex: 1; min-height: 0; overflow: hidden; align-items: stretch; }
 
-/* SHAP */
+/* ── SHAP ── */
 .shap-box { border: 1px solid var(--border); border-radius: 8px; background: var(--card); overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
 .shap-hdr { padding: 0.45rem 1rem; border-bottom: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--accent); letter-spacing: 0.12em; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .shap-hdr-left { display: flex; align-items: center; gap: 0.35rem; }
@@ -121,7 +126,7 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 .shap-val.fraud { color: var(--red); }
 .shap-val.legit { color: var(--green); }
 
-/* RISK BREAKDOWN */
+/* ── RISK SIGNALS ── */
 .risk-box { border: 1px solid var(--border); border-radius: 8px; background: var(--card); display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
 .risk-hdr { padding: 0.45rem 1rem; border-bottom: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--accent); letter-spacing: 0.12em; display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0; }
 .risk-hdr::before { content:'|'; font-weight:700; }
@@ -135,14 +140,11 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 .signal-name { font-size: 0.72rem; font-weight: 600; color: var(--text); }
 .signal-desc { font-size: 0.6rem; color: var(--muted); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .signal-badge { font-family: 'Space Mono', monospace; font-size: 0.58rem; padding: 2px 8px; border-radius: 4px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
-.badge-safe   { background: rgba(16,185,129,0.15); color: var(--green); }
-.badge-warn   { background: rgba(245,158,11,0.15);  color: var(--amber); }
-.badge-danger { background: rgba(239,68,68,0.15);   color: var(--red); }
-.badge-low    { background: rgba(16,185,129,0.15);  color: var(--green); }
+.badge-low    { background: rgba(16,185,129,0.15); color: var(--green); }
 .badge-medium { background: rgba(245,158,11,0.15);  color: var(--amber); }
 .badge-high   { background: rgba(239,68,68,0.15);   color: var(--red); }
 
-/* BUTTON */
+/* ── BUTTON ── */
 .btn-area { flex-shrink: 0; display: flex; flex-direction: column; gap: 0.35rem; }
 .abtn { width: 100%; background: linear-gradient(135deg, #4f7fff 0%, #6d28d9 100%); color: #fff; border: none; border-radius: 8px; padding: 0.78rem; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.6rem; transition: all 0.2s; box-shadow: 0 4px 18px rgba(79,127,255,0.28); }
 .abtn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(79,127,255,0.38); }
@@ -153,7 +155,64 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 .err-box { border: 1px solid var(--red); border-radius: 8px; background: rgba(239,68,68,0.07); padding: 1rem; display: flex; gap: 0.75rem; }
 .err-title { font-family:'Space Mono',monospace; font-size:0.78rem; font-weight:700; color:var(--red); margin-bottom:0.25rem; }
 .err-msg { font-size:0.7rem; color:var(--sub); line-height:1.7; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+/* ════════════════════════════════════
+   MOBILE RESPONSIVE  (≤ 768px)
+   ════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* topbar — hide second tag on mobile */
+  .topbar { padding: 0 1rem; gap: 0.5rem; }
+  .topbar-tag.hide-mobile { display: none; }
+
+  /* layout: stack vertically, allow scroll */
+  html, body { height: auto; overflow: auto; }
+  .layout { flex-direction: column; height: auto; overflow: visible; margin-top: 44px; }
+
+  /* left panel: full width, natural height */
+  .left { width: 100%; border-right: none; border-bottom: 1px solid var(--border); overflow: visible; padding: 1rem; height: auto; }
+
+  /* right panel: full width, natural height */
+  .right { width: 100%; overflow: visible; padding: 1rem; height: auto; gap: 0.75rem; }
+
+  /* result content: no fixed height */
+  #resultContent { flex: none; overflow: visible; height: auto; }
+
+  /* prob row: 1 column on very small, 3 col ok on most phones */
+  .prob-row { grid-template-columns: 1fr 1fr 1fr; }
+  .prob-val { font-size: 1rem; }
+
+  /* bottom split: stack vertically on mobile */
+  .bottom-split { grid-template-columns: 1fr; overflow: visible; flex: none; height: auto; }
+
+  /* shap + risk: natural height, no overflow hidden */
+  .shap-box, .risk-box { min-height: 0; height: auto; }
+  .shap-rows { overflow: visible; flex: none; justify-content: flex-start; gap: 0.4rem; padding: 0.5rem 0.75rem; }
+  .risk-signals { overflow: visible; flex: none; justify-content: flex-start; gap: 0.4rem; padding: 0.5rem 0.85rem; }
+
+  /* shap row: smaller feature name col */
+  .shap-row { grid-template-columns: 100px 1fr 40px; }
+
+  /* num input: slightly smaller */
+  .num-wrap input[type="number"] { width: 80px; }
+  .sel-wrap select { width: 140px; }
+
+  /* analyze button: bigger tap target */
+  .abtn { padding: 0.9rem; font-size: 0.85rem; }
+
+  /* mbadge: wrap if needed */
+  .mbadge { flex-wrap: wrap; font-size: 0.54rem; }
+
+  /* btn-area: stick to bottom with padding */
+  .btn-area { padding-bottom: 1rem; }
+}
+
+@media (max-width: 400px) {
+  .prob-row { grid-template-columns: 1fr; }
+  .prob-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .prob-cell:last-child { border-bottom: none; }
+  .shap-row { grid-template-columns: 90px 1fr 38px; }
+}
 </style>
 </head>
 <body>
@@ -161,7 +220,7 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13p
 <div class="topbar">
   <div class="logo">Fraud<span>Shield</span></div>
   <div class="topbar-tag">TRANSACTION INTELLIGENCE</div>
-  <div class="topbar-tag">XGBoost · SHAP · AI MODEL</div>
+  <div class="topbar-tag hide-mobile">XGBoost · SHAP · AI MODEL</div>
   <div class="api-live">
     <div class="api-dot dot-amber" id="apiDot"></div>
     <span id="apiLabel" style="color:var(--amber)">CONNECTING</span>
@@ -350,112 +409,54 @@ async function analyse() {
   }
 }
 
-function buildRiskSignals(p, isFraud, prob) {
+function buildRiskSignals(p) {
   const signals = [];
-
   const hour = p.transaction_hour;
   const isLateNight = hour >= 0 && hour <= 5;
-  signals.push({
-    icon: isLateNight ? '🌙' : '☀️',
-    level: isLateNight ? 'medium' : 'low',
-    name: 'Transaction Hour',
-    desc: isLateNight ? `Hour ${hour} — late night activity` : `Hour ${hour} — normal business hours`,
-    badge: isLateNight ? 'MEDIUM RISK' : 'LOW RISK',
-  });
+  signals.push({ icon: isLateNight ? '🌙' : '☀️', level: isLateNight ? 'medium' : 'low', name: 'Transaction Hour', desc: isLateNight ? `Hour ${hour} — late night activity` : `Hour ${hour} — normal business hours`, badge: isLateNight ? 'MEDIUM RISK' : 'LOW RISK' });
 
-  const isNewAcc = p.account_age_days < 90;
-  const isMedAcc = p.account_age_days < 365;
-  signals.push({
-    icon: isNewAcc ? '⚠️' : '🏦',
-    level: isNewAcc ? 'high' : isMedAcc ? 'medium' : 'low',
-    name: 'Account Age',
-    desc: isNewAcc ? `Only ${p.account_age_days} days old — new account` : `${p.account_age_days} days — established account`,
-    badge: isNewAcc ? 'HIGH RISK' : isMedAcc ? 'MEDIUM RISK' : 'LOW RISK',
-  });
+  const isNewAcc = p.account_age_days < 90, isMedAcc = p.account_age_days < 365;
+  signals.push({ icon: isNewAcc ? '⚠️' : '🏦', level: isNewAcc ? 'high' : isMedAcc ? 'medium' : 'low', name: 'Account Age', desc: isNewAcc ? `Only ${p.account_age_days} days old — new account` : `${p.account_age_days} days — established account`, badge: isNewAcc ? 'HIGH RISK' : isMedAcc ? 'MEDIUM RISK' : 'LOW RISK' });
 
-  const isHighAmt = p.amount >= 100000;
-  const isMedAmt  = p.amount >= 50000;
-  signals.push({
-    icon: isHighAmt ? '🚨' : isMedAmt ? '⚠️' : '✅',
-    level: isHighAmt ? 'high' : isMedAmt ? 'medium' : 'low',
-    name: 'Transaction Amount',
-    desc: `₹${Number(p.amount).toLocaleString('en-IN')} — ${isHighAmt ? 'very high value' : isMedAmt ? 'elevated value' : 'normal range'}`,
-    badge: isHighAmt ? 'HIGH RISK' : isMedAmt ? 'MEDIUM RISK' : 'LOW RISK',
-  });
+  const isHighAmt = p.amount >= 100000, isMedAmt = p.amount >= 50000;
+  signals.push({ icon: isHighAmt ? '🚨' : isMedAmt ? '⚠️' : '✅', level: isHighAmt ? 'high' : isMedAmt ? 'medium' : 'low', name: 'Transaction Amount', desc: `₹${Number(p.amount).toLocaleString('en-IN')} — ${isHighAmt ? 'very high value' : isMedAmt ? 'elevated value' : 'normal range'}`, badge: isHighAmt ? 'HIGH RISK' : isMedAmt ? 'MEDIUM RISK' : 'LOW RISK' });
 
-  const highRiskMerchants   = ['Gambling'];
-  const mediumRiskMerchants = ['Electronics'];
-  const isHighMerchant   = highRiskMerchants.includes(p.merchant_category);
-  const isMediumMerchant = mediumRiskMerchants.includes(p.merchant_category);
-  signals.push({
-    icon: isHighMerchant ? '🎰' : isMediumMerchant ? '📱' : '🛒',
-    level: isHighMerchant ? 'high' : isMediumMerchant ? 'medium' : 'low',
-    name: 'Merchant Category',
-    desc: `${p.merchant_category} — ${isHighMerchant ? 'fraud-prone category' : isMediumMerchant ? 'moderate risk category' : 'low-risk category'}`,
-    badge: isHighMerchant ? 'HIGH RISK' : isMediumMerchant ? 'MEDIUM RISK' : 'LOW RISK',
-  });
+  const isHighM = ['Gambling'].includes(p.merchant_category), isMedM = ['Electronics'].includes(p.merchant_category);
+  signals.push({ icon: isHighM ? '🎰' : isMedM ? '📱' : '🛒', level: isHighM ? 'high' : isMedM ? 'medium' : 'low', name: 'Merchant Category', desc: `${p.merchant_category} — ${isHighM ? 'fraud-prone category' : isMedM ? 'moderate risk category' : 'low-risk category'}`, badge: isHighM ? 'HIGH RISK' : isMedM ? 'MEDIUM RISK' : 'LOW RISK' });
 
-  const isHighVel  = p.account_txn_count_30d > 30;
-  const isDormant  = p.account_txn_count_30d === 0;
-  signals.push({
-    icon: isHighVel ? '⚡' : isDormant ? '💤' : '✅',
-    level: isHighVel ? 'high' : isDormant ? 'medium' : 'low',
-    name: 'Transaction Velocity',
-    desc: isDormant ? 'No recent activity — dormant account' : `${p.account_txn_count_30d} txns in 30 days${isHighVel ? ' — unusually high' : ''}`,
-    badge: isHighVel ? 'HIGH RISK' : isDormant ? 'MEDIUM RISK' : 'LOW RISK',
-  });
+  const isHighV = p.account_txn_count_30d > 30, isDormant = p.account_txn_count_30d === 0;
+  signals.push({ icon: isHighV ? '⚡' : isDormant ? '💤' : '✅', level: isHighV ? 'high' : isDormant ? 'medium' : 'low', name: 'Transaction Velocity', desc: isDormant ? 'No recent activity — dormant account' : `${p.account_txn_count_30d} txns in 30 days${isHighV ? ' — unusually high' : ''}`, badge: isHighV ? 'HIGH RISK' : isDormant ? 'MEDIUM RISK' : 'LOW RISK' });
 
-  const highRiskTypes   = ['CASH_OUT'];
-  const mediumRiskTypes = ['TRANSFER'];
-  const isHighType   = highRiskTypes.includes(p.type);
-  const isMediumType = mediumRiskTypes.includes(p.type);
-  signals.push({
-    icon: isHighType ? '💸' : isMediumType ? '↗️' : '✅',
-    level: isHighType ? 'high' : isMediumType ? 'medium' : 'low',
-    name: 'Transaction Type',
-    desc: `${p.type} — ${isHighType ? 'most common in fraud cases' : isMediumType ? 'commonly linked to fraud' : 'low-risk type'}`,
-    badge: isHighType ? 'HIGH RISK' : isMediumType ? 'MEDIUM RISK' : 'LOW RISK',
-  });
+  const isHighT = ['CASH_OUT'].includes(p.type), isMedT = ['TRANSFER'].includes(p.type);
+  signals.push({ icon: isHighT ? '💸' : isMedT ? '↗️' : '✅', level: isHighT ? 'high' : isMedT ? 'medium' : 'low', name: 'Transaction Type', desc: `${p.type} — ${isHighT ? 'most common in fraud cases' : isMedT ? 'commonly linked to fraud' : 'low-risk type'}`, badge: isHighT ? 'HIGH RISK' : isMedT ? 'MEDIUM RISK' : 'LOW RISK' });
 
   return signals;
 }
 
 function renderResult(res, p) {
   const isFraud = res.is_fraud === 1;
-  const prob    = res.probability;
-  const pct     = (prob * 100).toFixed(1);
-  const conf    = res.confidence !== undefined ? (res.confidence * 100).toFixed(1) : (isFraud ? (prob * 100).toFixed(1) : ((1 - prob) * 100).toFixed(1));
-  const risk    = res.risk_level;
-  const rcolor  = risk === 'HIGH' ? 'var(--red)' : risk === 'MEDIUM' ? 'var(--amber)' : 'var(--green)';
-  const bcolor  = isFraud ? 'var(--red)' : 'var(--green)';
-  const confColor = parseFloat(conf) >= 85 ? 'var(--green)' : parseFloat(conf) >= 60 ? 'var(--amber)' : 'var(--red)';
-  const confLabel = parseFloat(conf) >= 85 ? 'Very High' : parseFloat(conf) >= 60 ? 'Moderate' : 'Low';
+  const prob = res.probability;
+  const pct  = (prob * 100).toFixed(1);
+  const conf = res.confidence !== undefined ? (res.confidence * 100).toFixed(1) : (isFraud ? (prob*100).toFixed(1) : ((1-prob)*100).toFixed(1));
+  const risk = res.risk_level;
+  const rcolor = risk==='HIGH' ? 'var(--red)' : risk==='MEDIUM' ? 'var(--amber)' : 'var(--green)';
+  const bcolor = isFraud ? 'var(--red)' : 'var(--green)';
+  const confColor = parseFloat(conf)>=85 ? 'var(--green)' : parseFloat(conf)>=60 ? 'var(--amber)' : 'var(--red)';
+  const confLabel = parseFloat(conf)>=85 ? 'Very High' : parseFloat(conf)>=60 ? 'Moderate' : 'Low';
 
-  const predClass = isFraud ? 'fraud' : 'legit';
-  const predIcon  = isFraud ? '🚨' : '✅';
-  const predTitle = isFraud ? 'FRAUD TRANSACTION' : 'LEGIT TRANSACTION';
-  const predSub   = isFraud ? 'High probability of fraudulent activity.' : 'No suspicious activity detected.';
-
-  // SHAP rows
   const shapData = res.feature_importance || [];
   const maxAbs   = Math.max(...shapData.map(d => d.abs_value), 0.001);
   const shapRows = shapData.map(d => {
-    const barPct = ((d.abs_value / maxAbs) * 100).toFixed(1);
-    const cls    = d.direction;
-    const sign   = d.shap_value > 0 ? '+' : '';
-    return `
-      <div class="shap-row">
-        <div class="shap-feat" title="${d.feature}">${d.feature}</div>
-        <div class="shap-bar-wrap">
-          <div class="shap-bar-fill bar-${cls}" style="width:0%" data-pct="${barPct}"></div>
-        </div>
-        <div class="shap-val ${cls}">${sign}${d.shap_value.toFixed(3)}</div>
-      </div>`;
+    const bp = ((d.abs_value/maxAbs)*100).toFixed(1);
+    const sign = d.shap_value > 0 ? '+' : '';
+    return `<div class="shap-row">
+      <div class="shap-feat" title="${d.feature}">${d.feature}</div>
+      <div class="shap-bar-wrap"><div class="shap-bar-fill bar-${d.direction}" style="width:0%" data-pct="${bp}"></div></div>
+      <div class="shap-val ${d.direction}">${sign}${d.shap_value.toFixed(3)}</div>
+    </div>`;
   }).join('');
 
-  // Risk signals
-  const signals = buildRiskSignals(p, isFraud, prob);
-  const signalRows = signals.map(s => `
+  const signalRows = buildRiskSignals(p).map(s => `
     <div class="signal-row">
       <div class="signal-icon ${s.level}">${s.icon}</div>
       <div class="signal-body">
@@ -463,18 +464,16 @@ function renderResult(res, p) {
         <div class="signal-desc">${s.desc}</div>
       </div>
       <div class="signal-badge badge-${s.level}">${s.badge}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 
   document.getElementById('resultContent').innerHTML = `
-    <div class="pred-single ${predClass}">
-      <div class="pred-icon">${predIcon}</div>
+    <div class="pred-single ${isFraud?'fraud':'legit'}">
+      <div class="pred-icon">${isFraud?'🚨':'✅'}</div>
       <div>
-        <div class="pred-title">${predTitle}</div>
-        <div class="pred-sub">${predSub}</div>
+        <div class="pred-title">${isFraud?'FRAUD TRANSACTION':'LEGIT TRANSACTION'}</div>
+        <div class="pred-sub">${isFraud?'High probability of fraudulent activity.':'No suspicious activity detected.'}</div>
       </div>
     </div>
-
     <div class="prob-row">
       <div class="prob-hdr">PROBABILITY SCORE</div>
       <div class="prob-cell">
@@ -492,11 +491,10 @@ function renderResult(res, p) {
         <div class="prob-val" style="color:${rcolor}">${risk}</div>
       </div>
     </div>
-
     <div class="bottom-split">
       <div class="shap-box">
         <div class="shap-hdr">
-          <div class="shap-hdr-left">WHY THIS PREDICTION? — TOP FACTORS</div>
+          <div class="shap-hdr-left">WHY THIS PREDICTION?</div>
           <div class="shap-legend">
             <div class="shap-leg-item"><div class="shap-leg-dot" style="background:var(--red)"></div>→ Fraud</div>
             <div class="shap-leg-item"><div class="shap-leg-dot" style="background:var(--green)"></div>→ Legit</div>
@@ -504,19 +502,15 @@ function renderResult(res, p) {
         </div>
         <div class="shap-rows">${shapRows}</div>
       </div>
-
       <div class="risk-box">
         <div class="risk-hdr">RISK SIGNALS</div>
         <div class="risk-signals">${signalRows}</div>
       </div>
-    </div>
-  `;
+    </div>`;
 
   setTimeout(() => {
     document.getElementById('probFill').style.width = pct + '%';
-    document.querySelectorAll('.shap-bar-fill').forEach(el => {
-      el.style.width = el.dataset.pct + '%';
-    });
+    document.querySelectorAll('.shap-bar-fill').forEach(el => { el.style.width = el.dataset.pct + '%'; });
   }, 50);
 }
 
@@ -524,10 +518,8 @@ function renderError() {
   document.getElementById('resultContent').innerHTML = `
     <div class="err-box">
       <div style="font-size:1.4rem;flex-shrink:0">⚠️</div>
-      <div>
-        <div class="err-title">SERVICE UNAVAILABLE</div>
-        <div class="err-msg">The prediction service is temporarily unavailable. Please try again in a few moments.</div>
-      </div>
+      <div><div class="err-title">SERVICE UNAVAILABLE</div>
+      <div class="err-msg">The prediction service is temporarily unavailable. Please try again.</div></div>
     </div>`;
 }
 
