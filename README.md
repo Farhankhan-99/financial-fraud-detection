@@ -59,12 +59,12 @@ Key findings from EDA on 6.3M transactions:
 
 10 business questions answered using SQLite on the full dataset:
 
-- 🚨 **Rule-based system was failing badly** — the existing `is_flagged_fraud` system caught only **16 out of 8,213** actual frauds (99.81% missed). This justified building an ML model.
-- 💸 **New accounts are fraud instruments** — fraud rate of **1.44%** for new accounts vs **0.01%** for established accounts. Fraudulent new accounts average just **10 days old**.
-- 📈 **End-of-month fraud spike** — fraud rate jumps to **0.88%** in the last 10 days vs **0.09–0.10%** in earlier periods.
-- 🎰 **Gambling = highest fraud rate** — **1.18%** fraud rate, ~4x higher than other categories.
-- 💰 **Large transactions are riskier** — top 1% transactions are **30x more likely to be fraud** (3.09% vs 0.10%), but 96% of large transactions are still legit.
-- 👴 **60+ age group most vulnerable** — fraud rate of **1.28%**, nearly 32x higher than the 18–30 group.
+- **Rule-based system was failing badly** — the existing `is_flagged_fraud` system caught only **16 out of 8,213** actual frauds (99.81% missed). This justified building an ML model.
+- **New accounts are fraud instruments** — fraud rate of **1.44%** for new accounts vs **0.01%** for established accounts. Fraudulent new accounts average just **10 days old**.
+- **End-of-month fraud spike** — fraud rate jumps to **0.88%** in the last 10 days vs **0.09–0.10%** in earlier periods.
+- **Gambling = highest fraud rate** — **1.18%** fraud rate, ~4x higher than other categories.
+- **Large transactions are riskier** — top 1% transactions are **30x more likely to be fraud** (3.09% vs 0.10%), but 96% of large transactions are still legit.
+- **60+ age group most vulnerable** — fraud rate of **1.28%**, nearly 32x higher than the 18–30 group.
 
 ---
 
