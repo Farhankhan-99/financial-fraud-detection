@@ -2,7 +2,7 @@
 
 An end-to-end machine learning project that detects fraudulent financial transactions in real time. Built on the PaySim synthetic dataset, this project covers the full data science pipeline — from EDA and SQL analysis to a deployed XGBoost model with SHAP explainability.
 
-🔗 **Live Demo:** [fraudshield.netlify.app](https://fraudshield.netlify.app)  
+🔗 **Live Demo:** [fraudshield.netlify.app](https://farhan-fraudshield.netlify.app)  
 ⚙️ **API:** [fraudshield-api-pdey.onrender.com](https://fraudshield-api-pdey.onrender.com/docs)
 
 ---
