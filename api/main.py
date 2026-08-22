@@ -13,7 +13,7 @@ import os
 ## For AI-ChatBot
 from groq import Groq
 from dotenv import load_dotenv
-from knowledge_base import FRAUDSHIELD_KNOWLEDGE
+from api.knowledge_base import FRAUDSHIELD_KNOWLEDGE
 
 load_dotenv()
 
