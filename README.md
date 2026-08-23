@@ -61,25 +61,25 @@ The base PaySim dataset only captures transaction mechanics (amount, balances, t
 | `isFraud` | Ground truth label |
 | `isFlaggedFraud` | Original rule-based flag (very weak — see SQL Analysis below) |
 
-### Enriched Columns (13) — and why they were added
+### Enriched Columns (13) — why added
 
-| Column | Basis for Adding |
-|--------|-------------------|
-| `transaction_hour` | Derived from `step % 24`. Fraud shows time-of-day clustering (late night/early morning) in real fraud datasets. |
-| `transaction_day_of_week` | Derived from `(step // 24) % 7`. Weekday vs weekend fraud behaviour differs in real transaction monitoring. |
-| `time_of_day` | Bucketed version of the hour (late_night/morning/afternoon/evening/midnight) — easier for EDA and model to pick up cyclical risk windows. |
-| `customer_age` | Added because fraud tends to disproportionately target older, less tech-savvy customers — modeled with fraud mean age ≈52 vs legit ≈38. |
-| `customer_gender` | Standard demographic field used in banking risk profiling, included for completeness of the customer profile. |
-| `account_age_days` | One of the strongest real-world fraud signals — freshly opened accounts are commonly used as mule/drop accounts. Fraud mean ≈46 days vs legit ≈1,223 days. |
-| `is_new_account` | Binary flag (`account_age_days < 90`) built from the above, so the model/EDA doesn't have to re-derive the threshold every time. |
-| `device_type` | Fraud rings often rely on specific device types (e.g. ATM-based cash-outs); added to simulate channel-level risk. |
-| `channel` | Correlated with `device_type` (App/Web/ATM/POS) — mirrors how banks track the access channel of a transaction. |
-| `is_international` | Cross-border transactions carry materially higher fraud risk in real banking data — modeled at 40% for fraud vs 5% for legit. |
-| `account_txn_count_30d` | Captures account velocity. Made bimodal for fraud accounts — either dormant (sudden activity) or high-frequency (rapid cash-out bursts), both classic fraud velocity patterns. |
-| `merchant_category` | Certain merchant categories (Gambling, Electronics) are known high-risk categories in real fraud/chargeback data — added to let the model learn category-level risk. |
-| `customer_state` | Added for geographic clustering analysis. **Caveat:** PaySim's transactions are modeled on African mobile money data, so mapping to 20 Indian states is a synthetic regional overlay, not a real geographic signal — documented here so it isn't misread as ground truth. |
+| Column | Why Added |
+|--------|-----------|
+| `transaction_hour` | Fraud clusters at certain hours (late night/early morning) |
+| `transaction_day_of_week` | Weekday vs weekend fraud behaviour differs |
+| `time_of_day` | Easier bucketed version of hour for EDA |
+| `customer_age` | Older customers get targeted more in fraud |
+| `customer_gender` | Standard demographic field for profiling |
+| `account_age_days` | New accounts are commonly used for fraud |
+| `is_new_account` | Quick flag for accounts under 90 days |
+| `device_type` | Some devices (ATM) are riskier than others |
+| `channel` | Tracks access channel like real banking systems |
+| `is_international` | Cross-border transactions are higher risk |
+| `account_txn_count_30d` | Captures unusual transaction velocity |
+| `merchant_category` | Some categories (Gambling, Electronics) are fraud-prone |
+| `customer_state` | For regional clustering (generic mapping, not real geo signal) |
 
-All enriched columns were generated using `numpy.random.seed(42)` for full reproducibility, and are documented as synthetic enrichment — not real PaySim fields.
+All enriched columns generated with `numpy.random.seed(42)` for reproducibility.
 
 ---
 
