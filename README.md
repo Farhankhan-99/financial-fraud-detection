@@ -1,6 +1,6 @@
 # 🛡️ FraudShield — Financial Fraud Detection System
 
-An end-to-end machine learning project that detects fraudulent financial transactions in real time. Built on the PaySim synthetic dataset, this project covers the full data science pipeline — from EDA and SQL analysis to a deployed XGBoost model with SHAP explainability.
+An end-to-end machine learning project that detects fraudulent financial transactions in real time. Built on the PaySim synthetic dataset, this project covers the full data science pipeline — from EDA and SQL analysis to a deployed XGBoost model with SHAP explainability and an AI-powered chat assistant.
 
 🔗 **Live Demo:** [fraudshield.netlify.app](https://farhan-fraudshield.netlify.app)  
 ⚙️ **API:** [fraudshield-api-pdey.onrender.com](https://fraudshield-api-pdey.onrender.com/docs)
@@ -38,6 +38,48 @@ financial-fraud-detection/
 │   └── 4-ML_Models.ipynb
 └── render.yaml
 ```
+
+---
+
+## 🧬 Dataset Columns — Original vs Enriched
+
+The base PaySim dataset only captures transaction mechanics (amount, balances, type). To simulate a realistic banking risk profile, 13 additional columns were synthetically engineered on top of it, each tied to a specific fraud pattern seen in real-world financial fraud research.
+
+### Original PaySim Columns (11)
+
+| Column | Description |
+|--------|-------------|
+| `step` | Time unit (1 step = 1 hour, simulation runs 744 steps = 30 days) |
+| `type` | Transaction type — CASH_IN, CASH_OUT, DEBIT, PAYMENT, TRANSFER |
+| `amount` | Transaction amount |
+| `nameOrig` | Sender account ID |
+| `oldbalanceOrg` | Sender balance before transaction |
+| `newbalanceOrig` | Sender balance after transaction |
+| `nameDest` | Receiver account ID |
+| `oldbalanceDest` | Receiver balance before transaction |
+| `newbalanceDest` | Receiver balance after transaction |
+| `isFraud` | Ground truth label |
+| `isFlaggedFraud` | Original rule-based flag (very weak — see SQL Analysis below) |
+
+### Enriched Columns (13) — and why they were added
+
+| Column | Basis for Adding |
+|--------|-------------------|
+| `transaction_hour` | Derived from `step % 24`. Fraud shows time-of-day clustering (late night/early morning) in real fraud datasets. |
+| `transaction_day_of_week` | Derived from `(step // 24) % 7`. Weekday vs weekend fraud behaviour differs in real transaction monitoring. |
+| `time_of_day` | Bucketed version of the hour (late_night/morning/afternoon/evening/midnight) — easier for EDA and model to pick up cyclical risk windows. |
+| `customer_age` | Added because fraud tends to disproportionately target older, less tech-savvy customers — modeled with fraud mean age ≈52 vs legit ≈38. |
+| `customer_gender` | Standard demographic field used in banking risk profiling, included for completeness of the customer profile. |
+| `account_age_days` | One of the strongest real-world fraud signals — freshly opened accounts are commonly used as mule/drop accounts. Fraud mean ≈46 days vs legit ≈1,223 days. |
+| `is_new_account` | Binary flag (`account_age_days < 90`) built from the above, so the model/EDA doesn't have to re-derive the threshold every time. |
+| `device_type` | Fraud rings often rely on specific device types (e.g. ATM-based cash-outs); added to simulate channel-level risk. |
+| `channel` | Correlated with `device_type` (App/Web/ATM/POS) — mirrors how banks track the access channel of a transaction. |
+| `is_international` | Cross-border transactions carry materially higher fraud risk in real banking data — modeled at 40% for fraud vs 5% for legit. |
+| `account_txn_count_30d` | Captures account velocity. Made bimodal for fraud accounts — either dormant (sudden activity) or high-frequency (rapid cash-out bursts), both classic fraud velocity patterns. |
+| `merchant_category` | Certain merchant categories (Gambling, Electronics) are known high-risk categories in real fraud/chargeback data — added to let the model learn category-level risk. |
+| `customer_state` | Added for geographic clustering analysis. **Caveat:** PaySim's transactions are modeled on African mobile money data, so mapping to 20 Indian states is a synthetic regional overlay, not a real geographic signal — documented here so it isn't misread as ground truth. |
+
+All enriched columns were generated using `numpy.random.seed(42)` for full reproducibility, and are documented as synthetic enrichment — not real PaySim fields.
 
 ---
 
@@ -186,6 +228,18 @@ Every prediction is explained using **SHAP (SHapley Additive exPlanations)**:
 
 ---
 
+## 💬 AI Chatbot — FraudShield Assistant
+
+A conversational assistant is built directly into the dashboard to help users understand *why* a transaction was flagged, without digging through raw SHAP numbers themselves.
+
+- **LLM:** Powered by the **Groq API**, running `openai/gpt-oss-120b` for fast, low-latency responses.
+- **Context-aware, not generic:** On every prediction, the assistant is fed the transaction's SHAP values, key risk signals, and the model's confidence score as live context — so its answers are grounded in that specific prediction rather than generic fraud trivia.
+- **Project knowledge base:** A `knowledge_base.py` file was built by extracting insights directly from the EDA, SQL analysis, and modeling notebooks, so the assistant can also answer higher-level questions about the dataset, model choices, and metrics (e.g. "why PR-AUC over accuracy?").
+- **Conversation memory:** Chat history is maintained as an in-memory JS array on the frontend for the duration of the session, allowing natural follow-up questions.
+- **UX:** Dedicated 420px-wide chat panel on the dashboard with 4 suggested starter questions, markdown-rendered replies (bold text, simple bullets — no heavy tables), styled to match the dark dashboard theme.
+
+---
+
 ## 🛠️ Tech Stack
 
 | Layer | Tools |
@@ -194,8 +248,9 @@ Every prediction is explained using **SHAP (SHapley Additive exPlanations)**:
 | SQL Analysis | SQLite, SQL |
 | ML | Scikit-learn, XGBoost, Optuna, SHAP, Imbalanced-learn |
 | API | FastAPI, Uvicorn |
+| AI Chatbot | Groq API (`openai/gpt-oss-120b`) |
 | Frontend | HTML, CSS, JavaScript |
-| Deployment | Render (API), Netlify (Frontend) |
+| Deployment | Render (API), Netlify (Frontend), UptimeRobot (uptime monitoring) |
 
 ---
 
